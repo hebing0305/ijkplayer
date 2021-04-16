@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         IjkMediaPlayer.native_profileBegin("libijkplayer.so");
         mVideoView = findViewById(R.id.ijkplayer);
         mVideoView.setVideoPath(url);
-        mVideoView.setPlayerType(1);
     }
 
     @Override
