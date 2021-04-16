@@ -895,7 +895,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 //                    //设置播放前的最大探测时间
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzemaxduration", 100L);
 
-//                    //播放前的探测Size，默认是1M, 改小一点会出画面更快
+////                    //播放前的探测Size，默认是1M, 改小一点会出画面更快
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 10 * 1024L);
 //                    //通过立即清理数据包来减少等待时长
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1L);
@@ -910,11 +910,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 //                    //设置seekTo能够快速seek到指定位置并播放
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "fastseek");
 //                    // 暂停输出直到停止后读取足够的数据包
-//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
+                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
 //                    // 不查询stream_info，直接使用
-//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "find_stream_info", 0);
+                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "find_stream_info", 0);
 //                    // 等待开始之后才绘制
-//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1);
+                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1);
 //
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "infbuf", 1);
                 }
