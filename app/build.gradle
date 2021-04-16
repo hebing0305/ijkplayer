@@ -29,5 +29,5 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation project(path: ':ijkplayer')
+    implementation project(path: ':ijkplayer-view')
 }
