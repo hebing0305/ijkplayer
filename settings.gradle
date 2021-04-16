@@ -1,3 +1,9 @@
+include ':ijkplayer-x86_64'
+include ':ijkplayer-x86'
+include ':ijkplayer-armv5'
+include ':ijkplayer-arm64'
+include ':ijkplayer-armv7a'
+include ':ijkplayer-java'
 include ':ijkplayer'
 include ':app'
 rootProject.name = "ijkplayer"

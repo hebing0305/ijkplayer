@@ -18,6 +18,11 @@ allprojects {
         jcenter()
     }
 }
+ext {
+    compileSdkVersion = 30
+    buildToolsVersion = "30.0.3"
+    targetSdkVersion = 30
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir
