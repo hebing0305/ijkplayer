@@ -25,6 +25,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -191,7 +193,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         addView(renderUIView);
 
         progressBar = new ProgressBar(getContext());
-//        progressBar.setVisibility(GONE);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         addView(progressBar, params);
@@ -422,11 +423,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                             break;
                         case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                             Log.d(TAG, "MEDIA_INFO_BUFFERING_START:");
-                            progressBar.setVisibility(VISIBLE);
+                            showProgressBar(true);
                             break;
                         case IMediaPlayer.MEDIA_INFO_BUFFERING_END:
                             Log.d(TAG, "MEDIA_INFO_BUFFERING_END:");
-                            progressBar.setVisibility(GONE);
+                            showProgressBar(false);
                             break;
                         case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH:
                             Log.d(TAG, "MEDIA_INFO_NETWORK_BANDWIDTH: " + arg2);
@@ -1098,9 +1099,18 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return MediaPlayerCompat.getSelectedTrack(mMediaPlayer, trackType);
     }
 
+    public void showProgressBar(boolean isShow) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(isShow ? VISIBLE : INVISIBLE);
+            }
+        });
+    }
+
     @Override
     public void onPrepared(IMediaPlayer mp) {
-        progressBar.setVisibility(GONE);
+        showProgressBar(false);
         mPrepareEndTime = System.currentTimeMillis();
         if (mHudViewHolder != null)
             mHudViewHolder.updateLoadCost(mPrepareEndTime - mPrepareStartTime);
