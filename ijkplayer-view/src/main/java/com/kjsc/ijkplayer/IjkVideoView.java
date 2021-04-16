@@ -91,11 +91,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private int mSurfaceHeight;
     private int mVideoRotationDegree;
     private IMediaController mMediaController;
-    private IMediaPlayer.OnCompletionListener mOnCompletionListener;
-    private IMediaPlayer.OnPreparedListener mOnPreparedListener;
     private int mCurrentBufferPercentage;
-    private IMediaPlayer.OnErrorListener mOnErrorListener;
-    private IMediaPlayer.OnInfoListener mOnInfoListener;
     private int mSeekWhenPrepared;  // recording the seek position while preparing
     private boolean mCanPause = true;
     private boolean mCanSeekBack = true;
@@ -405,8 +401,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     if (mMediaController != null) {
                         mMediaController.hide();
                     }
-                    if (mOnCompletionListener != null) {
-                        mOnCompletionListener.onCompletion(mMediaPlayer);
+                    if (mVideoListener != null) {
+                        mVideoListener.onCompletion(mMediaPlayer);
                     }
                 }
             };
@@ -414,8 +410,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private IMediaPlayer.OnInfoListener mInfoListener =
             new IMediaPlayer.OnInfoListener() {
                 public boolean onInfo(IMediaPlayer mp, int arg1, int arg2) {
-                    if (mOnInfoListener != null) {
-                        mOnInfoListener.onInfo(mp, arg1, arg2);
+                    if (mVideoListener != null) {
+                        mVideoListener.onInfo(mp, arg1, arg2);
                     }
                     switch (arg1) {
                         case IMediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING:
@@ -475,8 +471,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     }
 
                     /* If an error handler has been supplied, use it and finish. */
-                    if (mOnErrorListener != null) {
-                        if (mOnErrorListener.onError(mMediaPlayer, framework_err, impl_err)) {
+                    if (mVideoListener != null) {
+                        if (mVideoListener.onError(mMediaPlayer, framework_err, impl_err)) {
                             return true;
                         }
                     }
@@ -504,8 +500,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                                                 /* If we get here, there is no onError listener, so
                                                  * at least inform them that the video is over.
                                                  */
-                                                if (mOnCompletionListener != null) {
-                                                    mOnCompletionListener.onCompletion(mMediaPlayer);
+                                                if (mVideoListener != null) {
+                                                    mVideoListener.onCompletion(mMediaPlayer);
                                                 }
                                             }
                                         })
@@ -542,46 +538,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         }
     };
 
-    /**
-     * Register a callback to be invoked when the media file
-     * is loaded and ready to go.
-     *
-     * @param l The callback that will be run
-     */
-    public void setOnPreparedListener(IMediaPlayer.OnPreparedListener l) {
-        mOnPreparedListener = l;
-    }
+    VideoListener mVideoListener = null;
 
-    /**
-     * Register a callback to be invoked when the end of a media file
-     * has been reached during playback.
-     *
-     * @param l The callback that will be run
-     */
-    public void setOnCompletionListener(IMediaPlayer.OnCompletionListener l) {
-        mOnCompletionListener = l;
-    }
-
-    /**
-     * Register a callback to be invoked when an error occurs
-     * during playback or setup.  If no listener is specified,
-     * or if the listener returned false, VideoView will inform
-     * the user of any errors.
-     *
-     * @param l The callback that will be run
-     */
-    public void setOnErrorListener(IMediaPlayer.OnErrorListener l) {
-        mOnErrorListener = l;
-    }
-
-    /**
-     * Register a callback to be invoked when an informational event
-     * occurs during playback or setup.
-     *
-     * @param l The callback that will be run
-     */
-    public void setOnInfoListener(IMediaPlayer.OnInfoListener l) {
-        mOnInfoListener = l;
+    public void setVideoListener(VideoListener l) {
+        mVideoListener = l;
     }
 
     // REMOVED: mSHCallback
@@ -1149,8 +1109,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         // Get the capabilities of the player for this stream
         // REMOVED: Metadata
 
-        if (mOnPreparedListener != null) {
-            mOnPreparedListener.onPrepared(mMediaPlayer);
+        if (mVideoListener != null) {
+            mVideoListener.onPrepared(mMediaPlayer);
         }
         if (mMediaController != null) {
             mMediaController.setEnabled(true);
