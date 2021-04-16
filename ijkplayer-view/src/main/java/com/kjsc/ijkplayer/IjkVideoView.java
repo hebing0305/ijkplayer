@@ -849,6 +849,12 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         this.playerType = type;
     }
 
+    boolean isMediaCodec = true;
+
+    public void setMediaCodec(boolean mediaCodec) {
+        isMediaCodec = mediaCodec;
+    }
+
     public IMediaPlayer createPlayer() {
         System.out.println("createPlayer playerType=" + playerType);
         IMediaPlayer mediaPlayer = null;
@@ -866,7 +872,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     ijkMediaPlayer = new IjkMediaPlayer();
                     ijkMediaPlayer.native_setLogLevel(IjkMediaPlayer.IJK_LOG_WARN);
                     //播放优化
-                    if (true) {
+                    if (isMediaCodec) {
                         //硬件解码
                         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
                         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 1);
