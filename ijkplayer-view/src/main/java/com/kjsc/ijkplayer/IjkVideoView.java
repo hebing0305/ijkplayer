@@ -914,7 +914,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 //                    //设置seekTo能够快速seek到指定位置并播放
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "fastseek");
 ////                    // 暂停输出直到停止后读取足够的数据包 直播建议开启
-//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
+                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
 ////                    // 不查询stream_info，直接使用
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "find_stream_info", 0);
 //////                    // 等待开始之后才绘制
