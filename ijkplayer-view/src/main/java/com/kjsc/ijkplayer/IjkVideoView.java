@@ -886,6 +886,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     }
                     //跳帧处理,放CPU处理较慢时，进行跳帧处理，保证播放流程，画面和声音同步
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1);
+                    //是否初始化完成就直接开始播放
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0);
                     //48=流畅度 0=高画质
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
@@ -899,11 +900,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 ////                    //设置播放前的最大探测时间
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzemaxduration", 100L);
 ////                    //播放前的探测Size，默认是1M, 改小一点会出画面更快
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 10 * 1024L);
+//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 10 * 1024L);
 //                    //通过立即清理数据包来减少等待时长
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1L);
 ////                    //最大缓冲大小,单位kb
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 100*1024);
+//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 100*1024);
 //
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "min-frames", 100);
 //                    //最大FPS
@@ -912,12 +913,12 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
 //                    //设置seekTo能够快速seek到指定位置并播放
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "fastseek");
-////                    // 暂停输出直到停止后读取足够的数据包
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
+////                    // 暂停输出直到停止后读取足够的数据包 直播建议开启
+//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
 ////                    // 不查询stream_info，直接使用
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "find_stream_info", 0);
 //////                    // 等待开始之后才绘制
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1);
+//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1);
 //
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "infbuf", 1);
                 }
