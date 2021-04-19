@@ -22,9 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // init player
-        IjkMediaPlayer.loadLibrariesOnce(null);
-        IjkMediaPlayer.native_profileBegin("libijkplayer.so");
         mVideoView = findViewById(R.id.ijkplayer);
         mVideoView.setVideoPath(url);
     }
@@ -32,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        mVideoView.stopPlayback();
-        mVideoView.release(true);
-        mVideoView.stopBackgroundPlay();
+        mVideoView.stopAndRelease();
     }
 }

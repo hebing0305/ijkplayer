@@ -146,6 +146,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     }
 
     private void initVideoView(Context context) {
+        IjkMediaPlayer.loadLibrariesOnce(null);
+        IjkMediaPlayer.native_profileBegin("libijkplayer.so");
         mAppContext = context.getApplicationContext();
         initBackground();
         initRenders();
@@ -628,6 +630,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             AudioManager am = (AudioManager) mAppContext.getSystemService(Context.AUDIO_SERVICE);
             am.abandonAudioFocus(null);
         }
+        IjkMediaPlayer.native_profileEnd();
     }
 
     @Override
@@ -1169,5 +1172,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                 start();
             }
         }
+    }
+
+    public void stopAndRelease() {
+        stopPlayback();
+        release(true);
+        stopBackgroundPlay();
     }
 }

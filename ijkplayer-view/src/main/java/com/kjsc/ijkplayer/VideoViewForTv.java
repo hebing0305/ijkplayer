@@ -181,4 +181,5 @@ public class VideoViewForTv extends IjkVideoView {
     public void setNoControl(boolean noControl) {
         isNoControl = noControl;
     }
+
 }
