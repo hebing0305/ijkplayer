@@ -19,8 +19,6 @@ package com.kjsc.ijkplayer;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -99,16 +97,18 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private boolean mCanSeekBack = true;
     private boolean mCanSeekForward = true;
 
-    /** Subtitle rendering widget overlaid on top of the video. */
+    /**
+     * Subtitle rendering widget overlaid on top of the video.
+     */
     // private RenderingWidget mSubtitleWidget;
 
+    private IRenderView mRenderView;
     /**
      * Listener for changes to subtitle data, used to redraw when needed.
      */
     // private RenderingWidget.OnChangedListener mSubtitlesChangedListener;
 
     private Context mAppContext;
-    private IRenderView mRenderView;
     private int mVideoSarNum;
     private int mVideoSarDen;
 
@@ -467,6 +467,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
             new IMediaPlayer.OnErrorListener() {
                 public boolean onError(IMediaPlayer mp, int framework_err, int impl_err) {
                     Log.d(TAG, "Error: " + framework_err + "," + impl_err);
+                    showProgressBar(false);
                     mCurrentState = STATE_ERROR;
                     mTargetState = STATE_ERROR;
                     if (mMediaController != null) {
@@ -478,38 +479,6 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                         if (mVideoListener.onError(mMediaPlayer, framework_err, impl_err)) {
                             return true;
                         }
-                    }
-
-                    /* Otherwise, pop up an error dialog so the user knows that
-                     * something bad has happened. Only try and pop up the dialog
-                     * if we're attached to a window. When we're going away and no
-                     * longer have a window, don't bother showing the user an error.
-                     */
-                    if (getWindowToken() != null) {
-                        Resources r = mAppContext.getResources();
-                        int messageId;
-
-                        if (framework_err == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
-                            messageId = R.string.VideoView_error_text_invalid_progressive_playback;
-                        } else {
-                            messageId = R.string.VideoView_error_text_unknown;
-                        }
-
-                        new AlertDialog.Builder(getContext())
-                                .setMessage(messageId)
-                                .setPositiveButton(R.string.VideoView_error_button,
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int whichButton) {
-                                                /* If we get here, there is no onError listener, so
-                                                 * at least inform them that the video is over.
-                                                 */
-                                                if (mVideoListener != null) {
-                                                    mVideoListener.onCompletion(mMediaPlayer);
-                                                }
-                                            }
-                                        })
-                                .setCancelable(false)
-                                .show();
                     }
                     return true;
                 }
@@ -910,11 +879,11 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 //                    //最大FPS
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-fps", 30);
 ////                    //seek优化
-//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
+                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
 //                    //设置seekTo能够快速seek到指定位置并播放
-//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "fastseek");
+                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "fastseek");
 ////                    // 暂停输出直到停止后读取足够的数据包 直播建议开启
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
+//                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0L);
 ////                    // 不查询stream_info，直接使用
 //                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "find_stream_info", 0);
 //////                    // 等待开始之后才绘制
