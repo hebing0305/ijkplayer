@@ -198,7 +198,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         addView(progressBar, params);
-
+        showProgressBar(false);
         mRenderView.addRenderCallback(mSHCallback);
         mRenderView.setVideoRotation(mVideoRotationDegree);
     }
@@ -269,6 +269,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         openVideo();
         requestLayout();
         invalidate();
+        showProgressBar(true);
     }
 
     // REMOVED: addSubtitleSource
@@ -1079,12 +1080,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     }
 
     public void showProgressBar(boolean isShow) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(isShow ? VISIBLE : INVISIBLE);
-            }
-        });
+        System.out.println("showProgressBar isShow="+isShow);
+        progressBar.setVisibility(isShow ? VISIBLE : INVISIBLE);
     }
 
     @Override
