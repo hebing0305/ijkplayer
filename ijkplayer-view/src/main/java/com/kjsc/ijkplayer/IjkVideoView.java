@@ -1146,4 +1146,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         release(true);
         stopBackgroundPlay();
     }
+
+    public IMediaPlayer getMediaPlayer(){
+        return mMediaPlayer;
+    }
 }
