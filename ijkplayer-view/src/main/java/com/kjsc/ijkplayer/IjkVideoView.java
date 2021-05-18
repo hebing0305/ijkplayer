@@ -18,6 +18,7 @@
 package com.kjsc.ijkplayer;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -327,6 +328,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     (TextUtils.isEmpty(scheme) || scheme.equalsIgnoreCase("file"))) {
                 IMediaDataSource dataSource = new FileMediaDataSource(new File(mUri.toString()));
                 mMediaPlayer.setDataSource(dataSource);
+            } else if (mUri.getScheme().equals(ContentResolver.SCHEME_ANDROID_RESOURCE)) {
+                RawDataSourceProvider rawDataSourceProvider = RawDataSourceProvider.create(context, mUri);
+                mMediaPlayer.setDataSource(rawDataSourceProvider);
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 mMediaPlayer.setDataSource(mAppContext, mUri, mHeaders);
             } else {
@@ -1080,7 +1084,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     }
 
     public void showProgressBar(boolean isShow) {
-        System.out.println("showProgressBar isShow="+isShow);
+        System.out.println("showProgressBar isShow=" + isShow);
         progressBar.setVisibility(isShow ? VISIBLE : INVISIBLE);
     }
 
@@ -1147,7 +1151,7 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         stopBackgroundPlay();
     }
 
-    public IMediaPlayer getMediaPlayer(){
+    public IMediaPlayer getMediaPlayer() {
         return mMediaPlayer;
     }
 }
